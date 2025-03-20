@@ -12,7 +12,8 @@ function ProductForm() {
   const [errors, setErrors] = useState({
     name: false,
     image: false,
-    price: false,
+    hasPrice: false,
+    hasValidPrice: false,
     description: false,
     hasEmail: false,
     hasValidEmail: false,
@@ -26,7 +27,8 @@ function ProductForm() {
     const errors = {
       name: name.trim().length <= 0,
       image: image.trim().length <= 0,
-      price: isNaN(parseFloat(price)) || parseFloat(price) <= 0,
+      hasPrice: isNaN(parseFloat(price)),
+      hasValidPrice: parseFloat(price) <= 0,
       description: description.trim().length <= 0,
       hasEmail: email.trim().length <= 0,
       hasValidEmail: !emailRegex.test(email.trim()),
@@ -99,7 +101,11 @@ function ProductForm() {
             }
           />
         </label>
-        {errors.price && <span>Price must be greater than 0.</span>}
+        {errors.hasPrice ? (
+          <span>Price is required.</span>
+        ) : errors.hasValidPrice ? (
+          <span>Price must be greater than 0.</span>
+        ) : null}
       </div>
       <div className="input-container">
         <label>
